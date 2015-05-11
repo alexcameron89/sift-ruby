@@ -1,3 +1,7 @@
+=== 2.0.1.0 2016-07-25
+* Add APIs for accessing Device IDs
+* Upgraded third-party dependencies to latest stable versions
+
 === 2.0.0.0 2016-07-19
 * adds support for v204 of Sift Science's APIs
 * adds Workflow Status API, User Decisions API, Order Decisions API
