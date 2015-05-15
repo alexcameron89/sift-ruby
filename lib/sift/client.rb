@@ -1,7 +1,6 @@
-require 'httparty'
-require 'multi_json'
-
 module Sift
+
+  include Credentials
 
   # Represents the payload returned from a call through the track API
   #
