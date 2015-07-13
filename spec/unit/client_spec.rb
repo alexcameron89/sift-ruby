@@ -105,8 +105,9 @@ describe Sift::Client do
 
   it "Cannot instantiate client with empty, non-string, or blank path" do
     api_key = "test_local_api_key"
-    expect(lambda { Sift::Client.new(:path => "") }).to raise_error(StandardError)
-    expect(lambda { Sift::Client.new(:path => 123456) }).to raise_error(StandardError)
+    expect(lambda { Sift::Client.new(api_key, nil) }).to raise_error(StandardError)
+    expect(lambda { Sift::Client.new(api_key, "") }).to raise_error(StandardError)
+    expect(lambda { Sift::Client.new(api_key, 123456) }).to raise_error(StandardError)
   end
 
 
@@ -117,26 +118,26 @@ describe Sift::Client do
 
 
   it "Track call must specify an event name" do
-    expect(lambda { Sift::Client.new().track(nil) }).to raise_error(StandardError)
-    expect(lambda { Sift::Client.new().track("") }).to raise_error(StandardError)
+    expect(lambda { Sift::Client.new("foo").track(nil) }).to raise_error(StandardError)
+    expect(lambda { Sift::Client.new("foo").track("") }).to raise_error(StandardError)
   end
 
 
   it "Must specify an event name" do
-    expect(lambda { Sift::Client.new().track(nil) }).to raise_error(StandardError)
-    expect(lambda { Sift::Client.new().track("") }).to raise_error(StandardError)
+    expect(lambda { Sift::Client.new("foo").track(nil) }).to raise_error(StandardError)
+    expect(lambda { Sift::Client.new("foo").track("") }).to raise_error(StandardError)
   end
 
 
   it "Must specify properties" do
     event = "custom_event_name"
-    expect(lambda { Sift::Client.new().track(event) }).to raise_error(StandardError)
+    expect(lambda { Sift::Client.new("foo").track(event) }).to raise_error(StandardError)
   end
 
 
   it "Score call must specify a user_id" do
-    expect(lambda { Sift::Client.new().score(nil) }).to raise_error(StandardError)
-    expect(lambda { Sift::Client.new().score("") }).to raise_error(StandardError)
+    expect(lambda { Sift::Client.new("foo").score(nil) }).to raise_error(StandardError)
+    expect(lambda { Sift::Client.new("foo").score("") }).to raise_error(StandardError)
   end
 
 
@@ -373,7 +374,7 @@ describe Sift::Client do
     response = client.get_user_decisions("example_user")
 
     expect(response.ok?).to eq(true)
-    expect(response.body["decisions"]["content_abuse"]["decision"]["id"]).to eq("user_decision")    
+    expect(response.body["decisions"]["content_abuse"]["decision"]["id"]).to eq("user_decision")
   end
 
 
