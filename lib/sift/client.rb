@@ -160,7 +160,6 @@ module Sift
     #   :version::
     #     Overrides the version of the Events API to call.
     #
-<<<<<<< 7b677f1569366925ac9f1b9ef7d157a082b812f8
     #   :path::
     #     Overrides the URI path for this API call.
     #
@@ -189,21 +188,6 @@ module Sift
       query["return_action"] = "true" if return_action
       query["return_workflow_status"] = "true" if return_workflow_status
       query["abuse_types"] = abuse_types.join(",") if abuse_types
-=======
-    def track(event, properties = {}, timeout = nil, path = nil, return_score = false, api_key = @api_key, return_action = false)
-      warn "[WARNING] api_key cannot be empty, fallback to default api_key." if api_key.to_s.empty?
-      api_key ||= @api_key
-      raise(Error, "event must be a non-empty string") if (!event.is_a? String) || event.empty?
-      raise(Error, "properties cannot be empty") if properties.empty?
-      raise(ConfigError, "Bad api_key parameter") if api_key.empty?
-      path ||= @path
-      timeout ||= @timeout
-
-      uri = URI.parse(API_ENDPOINT)
-      uri.query = URI.encode_www_form(URI.decode_www_form(uri.query.to_s) << ["return_score", "true"]) if return_score
-      uri.query = URI.encode_www_form(URI.decode_www_form(uri.query.to_s) << ["return_action", "true"]) if return_action
-      path = path + "?" + uri.query if !uri.query.to_s.empty?
->>>>>>>   - Reorganize classes a bit to be more ruby like
 
       options = {
         :body => MultiJson.dump(delete_nils(properties).merge({"$type" => event,
@@ -262,14 +246,8 @@ module Sift
       timeout = opts[:timeout] || @timeout
       version = opts[:version] || @version
 
-<<<<<<< 7b677f1569366925ac9f1b9ef7d157a082b812f8
       raise("user_id must be a non-empty string") if (!user_id.is_a? String) || user_id.to_s.empty?
       raise("Bad api_key parameter") if api_key.empty?
-=======
-      raise(Error, "user_id must be a non-empty string") if (!user_id.is_a? String) || user_id.to_s.empty?
-      raise(Error, "Bad api_key parameter") if api_key.empty?
-      timetout ||= @timeout
->>>>>>>   - Reorganize classes a bit to be more ruby like
 
       query = {}
       query["api_key"] = api_key
